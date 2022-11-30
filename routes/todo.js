@@ -41,7 +41,7 @@ router.post("/new", function (req, res, next) {
     completed: false,
     completedAt: 9999999999999,
   };
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
@@ -49,7 +49,7 @@ router.post("/new", function (req, res, next) {
     var todo = parseData(data);
     todo.push(newItem);
 
-    fs.writeFile(path.join(__dirname, "../todo.txt"), JSON.stringify(todo), function (err) {
+    fs.writeFile(path.join(__dirname, "../.output/static/todo.txt"), JSON.stringify(todo), function (err) {
       if (err) {
         res.status(500).json({ success: false, error: err });
         return;
@@ -64,7 +64,7 @@ router.put("/update", function (req, res, next) {
     ...req.body,
     updatedAt: Date.now(),
   };
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
@@ -77,7 +77,7 @@ router.put("/update", function (req, res, next) {
       res.status(500).json({ success: false, error: null, code: "not_found" });
       return;
     }
-    fs.writeFile(path.join(__dirname, "../todo.txt"), JSON.stringify(todo), function (err) {
+    fs.writeFile(path.join(__dirname, "../.output/static/todo.txt"), JSON.stringify(todo), function (err) {
       if (err) {
         res.status(500).json({ success: false, error: err });
         return;
@@ -89,7 +89,7 @@ router.put("/update", function (req, res, next) {
 
 router.delete("/:uid", function (req, res, next) {
   var uid = req.params?.uid;
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
@@ -102,7 +102,7 @@ router.delete("/:uid", function (req, res, next) {
       res.status(500).json({ success: false, error: null, code: "not_found" });
       return;
     }
-    fs.writeFile(path.join(__dirname, "../todo.txt"), JSON.stringify(todo), function (err) {
+    fs.writeFile(path.join(__dirname, "../.output/static/todo.txt"), JSON.stringify(todo), function (err) {
       if (err) {
         res.status(500).json({ success: false, error: err });
         return;
@@ -115,7 +115,7 @@ router.delete("/:uid", function (req, res, next) {
 router.patch("/mark-completed", function (req, res, next) {
   var completed = req.body?.completed;
   var uid = req.body?.uid;
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
@@ -132,7 +132,7 @@ router.patch("/mark-completed", function (req, res, next) {
       res.status(500).json({ success: false, error: null, code: "not_found" });
       return;
     }
-    fs.writeFile(path.join(__dirname, "../todo.txt"), JSON.stringify(todo), function (err) {
+    fs.writeFile(path.join(__dirname, "../.output/static/todo.txt"), JSON.stringify(todo), function (err) {
       if (err) {
         res.status(500).json({ success: false, error: err });
         return;
@@ -145,7 +145,7 @@ router.patch("/mark-completed", function (req, res, next) {
 router.patch("/set-priority", function (req, res, next) {
   var priority = req.body?.priority;
   var uid = req.body?.uid;
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
@@ -161,7 +161,7 @@ router.patch("/set-priority", function (req, res, next) {
       res.status(500).json({ success: false, error: null, code: "not_found" });
       return;
     }
-    fs.writeFile(path.join(__dirname, "../todo.txt"), JSON.stringify(todo), function (err) {
+    fs.writeFile(path.join(__dirname, "../.output/static/todo.txt"), JSON.stringify(todo), function (err) {
       if (err) {
         res.status(500).json({ success: false, error: err });
         return;
@@ -176,7 +176,7 @@ router.get("/list/all", function (req, res, next) {
   var status = req.query?.status; //completed, active, today, future, overdue
   var sortByName = req.query?.sortByName; // createdDate, completedDate, appliedDate
   var sortByOrder = req.query?.sortByOrder; // asc, desc
-  fs.readFile(path.join(__dirname, "../todo.txt"), function (err, data) {
+  fs.readFile(path.join(__dirname, "../.output/static/todo.txt"), function (err, data) {
     if (err) {
       res.status(500).json({ success: false, error: err });
       return;
